@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+{% if error %}
+<p class="alert alert-danger"><strong>Error:</strong> {{ error }}
+{% endif %}
+{% if cr %}
+<h1>Edit Creature</h1>
+
+<form action="{{url_for('updateCreature', crea=cr.id)}}" method="post">
+    <label>Name</label><br>
+    <textarea class="fixxxed" rows="1" cols="25" name="name">{{cr.name}}</textarea><br>
+    <label>Size</label><br>
+    <textarea class="fixxxed" rows="1" cols="10" name="size">{{cr.size}}</textarea><br>
+    <label>Notes</label><br>
+    <textarea rows="10" cols="100" name="notes">{{cr.notes}}</textarea><br>
+    <label>Spells</label><br>
+    <textarea rows="5" cols="100" name="spells">{{cr.spells}}</textarea><br>
+    <label>Number of Attacks</label><br>
+    <textarea class="fixxxed" rows="1" cols="2" name="spells">{{cr.numAttacks}}</textarea><br>
+    labe
+   
+    <label>Resistances</label><br>
+    <table>
+        <tr>
+            {%for type in types%}
+            {%if type in cr.resistances%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="resistances" value={{type.id}} checked>
+            </td>
+            {%else%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="resistances" value={{type.id}}>
+            </td>
+            {%endif%}
+            {%endfor%}
+        </tr>
+    </table>
+    <label>Immunities</label><br>
+    <table>
+        <tr>
+            {%for type in types%}
+            {%if type in cr.immunities%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="immunities" value={{type.id}} checked>
+            </td>
+            {%else%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="immunities" value={{type.id}}>
+            </td>
+            {%endif%}
+            {%endfor%}
+        </tr>
+    </table>
+    <label>Vulnerabilities</label><br>
+    <table>
+        <tr>
+            {%for type in types%}
+            {%if type in cr.vulnerabilities%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="vulnerabilities" value={{type.id}} checked>
+            </td>
+            {%else%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="vulnerabilities" value={{type.id}}>
+            </td>
+            {%endif%}
+            {%endfor%}
+        </tr>
+    </table>
+    <label>Damage Types</label><br>
+    <table>
+        <tr>
+            {%for type in types%}
+            {%if type in cr.dmgTypes%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="dmgTypes" value={{type.id}} checked>
+            </td>
+            {%else%}
+            <td>
+                <label>{{type.name}}</label>
+                <input type="checkbox" id={{type.id}} name="dmgTypes" value={{type.id}}>
+            </td>
+            {%endif%}
+            {%endfor%}
+        </tr>
+    </table>
+    <label>Attributes</label><br>
+    <table>
+        <tr>
+            {%for attr in attrs%}
+            {%if attr in cr.attributes%}
+            <td>
+                <label>{{attr.name}}</label>
+                <input type="checkbox" id={{attr.id}} name="attributes" value={{attr.id}} checked>
+            </td>
+            {%else%}
+            <td>
+                <label>{{attr.name}}</label>
+                <input type="checkbox" id={{attr.id}} name="attributes" value={{attr.id}}>
+            </td>
+            {%endif%}
+            {%endfor%}
+        </tr>
+    </table>
+    
+    <input type="submit">
+</form>
+{% else %}
+<h1>New Creature</h1>
+
+<form action="{{ url_for('createCreature') }}" method="post">
+    <label>Name</label><br>
+    <textarea class="fixxxed" rows="1" cols="25" name="name"></textarea><br>
+    <label>Size</label><br>
+    <textarea class="fixxxed" rows="1" cols="10" name="size"></textarea><br>
+    <label>Notes</label><br>
+    <textarea rows="10" cols="100" name="notes"></textarea><br>
+    <input type="submit">
+</form>
+{% endif %}
+<div>
+  <a href="{{url_for('creatures')}}">
+    Back
+  </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+{% if error %}
+    <p class="alert alert-danger"><strong>Error:</strong> {{ error }}
+  {% endif %}
+{% if at %}
+<h1>Edit Attribute</h1>
+
+<form action="{{url_for('updateAttribute', attr=at.id)}}" method="post">
+    <label>Name</label><br>
+    <textarea class="fixxxed" rows="1" cols="20" name="name">{{at.name}}</textarea><br>
+    <label>Description</label><br>
+    <textarea rows="5" cols="70" name="desc">{{at.desc}}</textarea><br>
+    <input type="submit">
+</form>
+{% else %}
+<h1>New Attribute</h1>
+
+<form action="{{ url_for('createAttribute') }}" method="post">
+    <label>Name</label><br>
+    <textarea class="fixxxed" rows="1" cols="20" name="name"></textarea><br>
+    <label>Description</label><br>
+    <textarea rows="5" cols="70" name="desc"></textarea><br>
+    <input type="submit">
+</form>
+{% endif %}
+<div>
+  <a href="{{url_for('attributes')}}">
+    Back
+  </a>
+</div>
+
+{% endblock %}

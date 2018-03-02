@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+{% if cr %}
+<h1>{{cr.name}}</h1>
+<div class="col-sm-6 col-xs-12">
+  <span class="col-xs-4">Size: {{cr.size}}</span>
+  <span class ="col-xs-4">Speed: {{cr.speed}}</span>
+  <span class ="col-xs-4">Health: {{st['hp']}}</span>
+  
+  <span class="col-xs-6">Evasion: {{st['evasion']}}</span>
+  <span class ="col-xs-6">Accuracy: {{st['acc']}}</span>
+
+  <span class ="col-xs-6">Attacks/Round: {{cr.numAttacks}}</span>
+  <span class ="col-xs-6">Damage/Round: {{st['dps']}}</span>  
+
+  <div class="col-xs-12">{{cr.notes}}</div>
+  <audio autoplay controls>
+    <source src="{{url_for('static', filename='sounds/'+cr.name+'.mp3')}}" type="audio/mpeg">
+  Your browser does not support the audio element.
+  </audio>
+
+    <table>
+      <tr>
+        <th>Resistances</th>
+        <th>Immunities</th>
+        <th>Vulnerabilities</th>
+        <th>Damage Types</th>
+      </tr>
+        <tr>
+          <td>
+            {%for i in cr.resistances%}
+            {{i.name}}<br>
+            {%endfor%}
+          </td>
+          <td>
+            {%for i in cr.immunities%}
+            {{i.name}}<br>
+            {%endfor%}
+          </td>
+          <td>
+            {%for i in cr.vulnerabilities%}
+            {{i.name}}<br>
+            {%endfor%}
+          </td>
+          <td>
+            {%for i in cr.dmgTypes%}
+            {{i.name}}<br>
+            {%endfor%}
+          </td>
+        </tr>
+    </table>
+  </div>
+
+<img class="col-sm-6 col-xs-12" src="/static/images/{{cr.name}}.jpg" alt="A {{cr.name}}">
+
+<h2>Attributes</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  {%for i in cr.attributes%}
+    <tr>
+      <td>
+        {{i.name}}
+      </td>
+      <td>
+        {{i.desc}}
+      </td>
+    </tr>
+  {%endfor%}
+</table>
+
+<h2>Encounters</h2>
+<table>
+  <tr>
+    <th>Hits / Attacks</th>
+    <th>Damage Dealt</th>
+    <th>Hits / Attacks Received</th>
+    <th>Damage Received</th>
+    <th>Attack Bonus</th>
+    <th>AC</th>
+    <th colspan="2">Actions</th>
+  </tr>
+    {%for encounter in cr.encounters%}
+      <tr>
+        <td>
+          {{encounter.hitsLand}} / {{encounter.atksLand}}
+        </td>
+        <td>
+          {{encounter.dmgLand}}
+        </td>
+        <td>
+          {{encounter.hitsRec}} / {{encounter.atksRec}}
+        </td>
+        <td>
+          {{encounter.dmgRec}}
+        </td>
+        <td>
+          {{encounter.atkBonus}}
+        </td>
+        <td>
+          {{encounter.ac}}
+        </td>
+        <td>
+          <a href="{{url_for('editEncounter', crea=cr.id, enc=encounter.id)}}">Edit</a>
+        </td>
+        <td>
+          <a href="{{url_for('deleteEncounter', crea=cr.id, enc=encounter.id)}}">Delete</a>
+        </td>
+      </tr>
+    {%endfor%}
+</table>
+{% else %}
+  <h1>No entry for this creature</h1>
+{% endif %}
+<div>
+  <a href="{{url_for('newEncounter', crea=cr.id)}}">Record Encounter</a><br>
+  <a href="{{url_for('editCreature', crea=cr.id)}}">Edit</a>
+  <a href="{{url_for('deleteCreature', crea=cr.id)}}">Remove</a>
+  <a href="{{url_for('creatures')}}">Back</a>
+</div>
+{% endblock %}

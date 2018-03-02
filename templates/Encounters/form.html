@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+{% if error %}
+<p class="alert alert-danger"><strong>Error:</strong> {{ error }}
+{% endif %}
+{% if en and cr%}
+<h1>Edit Encounter</h1>
+
+<form action="{{url_for('updateEncounter', crea=cr, enc=en.id)}}" method="post">
+    <label>Hits Delivered</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="hitsLand">{{en.hitsLand}}</textarea><br>
+    <label>Attacks Delivered</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="atksLand">{{en.atksLand}}</textarea><br>
+    <label>Damage Deliverd</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="dmgLand">{{en.dmgLand}}</textarea><br>
+    <label>Attack Bonus</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="atkBonus">{{en.atkBonus}}</textarea><br>
+    <label>Hits Received</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="hitsRec">{{en.hitsRec}}</textarea><br>
+    <label>Attacks Received</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="atksRec">{{en.atksRec}}</textarea><br>
+    <label>Damage Received</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="dmgRec">{{en.dmgRec}}</textarea><br>
+    <label>AC</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="ac">{{en.ac}}</textarea><br>
+    <input type="submit">
+</form>
+{% else %}
+<h1>New Encounter</h1>
+
+<form action="{{ url_for('createEncounter', crea=cr)}}" method="post">
+    <label>Hits Delivered</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="hitsLand"></textarea><br>
+    <label>Attacks Delivered</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="atksLand"></textarea><br>
+    <label>Damage Deliverd</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="dmgLand"></textarea><br>
+    <label>Attack Bonus</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="atkBonus">{%if 'atkBonus' in session%}{{session['atkBonus']}}{%endif%}</textarea><br>
+    <label>Hits Received</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="hitsRec"></textarea><br>
+    <label>Attacks Received</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="atksRec"></textarea><br>
+    <label>Damage Received</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="dmgRec"></textarea><br>
+    <label>AC</label><br>
+    <textarea class="fixxxed" rows="1" cols="4" name="ac">{%if 'ac' in session%}{{session['ac']}}{%endif%}</textarea><br>
+    <input type="submit">
+</form>
+{% endif %}
+<div>
+  <a href="{{url_for('showCreature', crea=cr)}}">
+    Back
+  </a>
+</div>
+
+{% endblock %}

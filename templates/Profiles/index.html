@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+<h1>Profiles</h1>
+{% if list %}
+  <table>
+  	<tr>
+  		<th>Name</th>
+  		<th>Attack Bonus</th>
+      <th>Armor Class</th>
+  	</tr>
+  	{%for i in list%}
+  		<tr>
+  			<td>
+          <a href="{{url_for('profile', prof=i.id)}}">{{i.name}}</a>
+        </td>
+  			<td>
+  				{{i.atkBonus}}
+  			</td>
+        <td>
+          {{i.ac}}
+        </td>
+        <td class="hidden-xs">
+          <a href="{{url_for('deleteProfile', prof=i.id)}}">Remove</a>
+        </td>
+  		</tr>
+  	{%endfor%}
+  </table>
+{% else %}
+  <h1>The Monsterpedia has no recorded profiles</h1>
+{% endif %}
+<div>
+  <a href="{{url_for('newProfile')}}">
+    Add Profile
+  </a>
+</div>
+{% endblock %}

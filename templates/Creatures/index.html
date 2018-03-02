@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+<h1>Creatures</h1>
+{% if list %}
+  <table>
+  	<tr>
+  		<th>Name</th>
+  		<th>Size</th>
+      <th>Number of Encounters</th>
+  		<th class="hidden-xs">Notes</th>
+      <th class="hidden-xs" colspan="3">Actions</th>
+  	</tr>
+  	{%for i in list%}
+  		<tr>
+  			<td>
+  				<a href="{{url_for('showCreature', crea=i.id)}}">{{i.name}}</a>
+  			</td>
+  			<td>
+  				{{i.size}}
+  			</td>
+        <td>
+          {{i.encounters.count()}}
+        </td>
+  			<td class="hidden-xs">
+  				{{i.notes}}
+  			</td>
+        <td class="hidden-xs">
+          <a href="{{url_for('newEncounter', crea=i.id)}}">Record Encounter</a>
+        </td>
+        <td class="hidden-xs">
+          <a href="{{url_for('editCreature', crea=i.id)}}">Edit</a>
+        </td>
+        <td class="hidden-xs">
+          <a href="{{url_for('deleteCreature', crea=i.id)}}">Remove</a>
+        </td>
+  		</tr>
+  	{%endfor%}
+  </table>
+{% else %}
+  <h1>The Monsterpedia is empty</h1>
+{% endif %}
+<div>
+  <a href="{{url_for('newCreature')}}">
+    New Creature
+  </a>
+</div>
+{% endblock %}

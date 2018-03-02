@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+{% if error %}
+    <p class="alert alert-danger"><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+<h1>New Profile</h1>
+
+<form action="{{ url_for('createProfile') }}" method="post">
+    <label>Name</label><br>
+    <textarea class="fixxxed" rows="1" cols="16" name="name"></textarea><br>
+    <label>Attack Bonus</label><br>
+    <textarea class="fixxxed" rows="1" cols="3" name="atkBonus"></textarea><br>
+    <label>Armor Class</label><br>
+    <textarea class="fixxxed" rows="1" cols="3" name="ac"></textarea><br>
+    <input type="submit">
+</form>
+
+<div>
+  <a href="{{url_for('profiles')}}">
+    Back
+  </a>
+</div>
+
+{% endblock %}
